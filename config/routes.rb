@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_for :users, :controllers => { registrations: 'registrations' }
+
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :channels, only: [] do
@@ -8,9 +8,9 @@ Rails.application.routes.draw do
       end
     end
   end
-  
+
   resources :channels, only: [ :show ]
-  # Defines the root path route ("/")
   root to: 'channels#show'
-  # root "articles#index"
+
+  mount ActionCable.server => "/cable"
 end
